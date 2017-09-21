@@ -1,0 +1,3 @@
+/home/mathias/Desktop/ROVI/Vision/Exercise1/build/CMakeFiles/edit_cache.dir
+/home/mathias/Desktop/ROVI/Vision/Exercise1/build/CMakeFiles/rebuild_cache.dir
+/home/mathias/Desktop/ROVI/Vision/Exercise1/build/CMakeFiles/Exercise1.dir
