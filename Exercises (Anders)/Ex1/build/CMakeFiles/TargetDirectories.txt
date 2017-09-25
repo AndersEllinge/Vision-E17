@@ -1,0 +1,3 @@
+/home/student/Desktop/DisplayImage/build/CMakeFiles/edit_cache.dir
+/home/student/Desktop/DisplayImage/build/CMakeFiles/rebuild_cache.dir
+/home/student/Desktop/DisplayImage/build/CMakeFiles/DisplayImage.dir
