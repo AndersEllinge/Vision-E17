@@ -42,7 +42,7 @@ int main( int argc, char** argv )
     //cv::imshow("mag", mag);
     //cv::waitKey();
     
-    cv::imwrite("freq_magnitude", mag);
+    cv::imwrite("freq_magnitude.bmp", mag);
     
     return 0;
 }

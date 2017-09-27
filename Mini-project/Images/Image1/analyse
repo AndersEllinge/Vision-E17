@@ -1,0 +1,9 @@
+mkdir analysis
+cd analysis
+mkdir histogram
+cd histogram
+../../../../Functions/Analysis/hist ../../Image1.png
+cd ..
+mkdir frequency
+cd frequency
+../../../../Functions/Analysis/freq ../../Image1.png

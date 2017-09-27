@@ -49,29 +49,6 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    cv::Mat transformImg = img.clone();
-/*
-1. Intensity transformations
-  - Loop through each pixel value x in the image and apply the function f(x)=x+50.
-    Remember to handle overflow, (look at the saturate_cast function).
-  - Visualize the original image and the transformed image.
-*/
-
-    fAdd(transformImg,50);
-    cv::imshow("Original", img);
-    cv::imshow("Transformed Image", transformImg);
-
-/*
-2. Histogram calculation
-  - Use calcHist to calculate an intensity histogram of the input grayscale image
-    and the intensity-transformed image.
-  - Implement histogram equalization. Use Gonzalez and Woods Eq. 3.3-8
-    (also checkout equalizeHist).
-  - Visualize the histograms.
-  - See the histogram calculation and histogram equalization tutorials
-    for inspiration. You will have to modify the code to single-channel images.
-*/
-
 	// Initialize parameters
 	int histSize = 256;    // bin size
 	float range[] = { 0, 255 };
@@ -93,7 +70,7 @@ int main(int argc, char* argv[])
 	}
 
 	//cv::imshow("Histogram", histImg);
-	cv::imwrite("Histogram", histImg);
+	cv::imwrite("Histogram.bmp", histImg);
 
 	// create CDF
 	float sum = 0;
@@ -112,7 +89,8 @@ int main(int argc, char* argv[])
 	for (size_t i = 0; i < hist.rows; i++) {
 		drawLine(CDF, cv::Point(i*2, hist_h), cv::Point(i*2, hist_h - histCDF.at<float>(0,i)));
 	}
-	cv::imshow("CPF", CDF);
+	//cv::imshow("CPF", CDF);
+	cv::imwrite("CPF.bmp", CDF);
 
 	//apply CDF as transform to image
 	cv::Mat EQImg = img.clone();
@@ -123,7 +101,7 @@ int main(int argc, char* argv[])
 		}
 	}
 	//cv::imshow("Equalized image", EQImg);
-	cv::imwrite("Equalized image", EQImg);
+	cv::imwrite("equalized.bmp", EQImg);
 
 	// Making a histgram from the equalized image
 	// Calculate histogram
@@ -140,7 +118,7 @@ int main(int argc, char* argv[])
 	//std::cout << hist << std::endl;
 
 	//cv::imshow("Histogram of the equalized image", histImg1);
-	cv::imwrite("Histogram of the equalized image", histImg1);
+	cv::imwrite("equalized_histogram.bmp", histImg1);
 
 
 	//cv::waitKey();
