@@ -1,10 +1,3 @@
-/*
- * RoVi1
- * Example application to load and display an image
- */
-
-// v1.0-4-gdfe246a
-
 #include <opencv2/opencv.hpp>
 #include <iostream>
 
@@ -89,8 +82,8 @@ int main(int argc, char* argv[])
 	for (size_t i = 0; i < hist.rows; i++) {
 		drawLine(CDF, cv::Point(i*2, hist_h), cv::Point(i*2, hist_h - histCDF.at<float>(0,i)));
 	}
-	//cv::imshow("CPF", CDF);
-	cv::imwrite("CPF.bmp", CDF);
+	//cv::imshow("cdf", CDF);
+	cv::imwrite("cdf.bmp", CDF);
 
 	//apply CDF as transform to image
 	cv::Mat EQImg = img.clone();

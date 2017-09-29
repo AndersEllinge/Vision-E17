@@ -8,15 +8,13 @@ int main( int argc, char** argv ) {
 
     if( !src.data )
         { return -1; }
-    
-    // Filter
-    cv::Mat output;
-    cv::medianBlur(src, output, 11);
-    
-    // Save and show
-    //cv::imshow("Result from median filtering", output);
-    cv::imwrite("processed.bmp", output);
-    
-    return 0;
-}
 
+	// Filter
+	cv::Mat kernel;
+	cv::Mat output;
+	cv::dilate(src, output, kernel);
+	
+	// Save and show
+    //cv::imshow("Result from max filtering", output);
+    cv::imwrite("processed.bmp", output);
+}

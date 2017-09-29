@@ -9,9 +9,15 @@ int main( int argc, char** argv ) {
     if( !src.data )
         { return -1; }
     
-    // Filter
+    // Create filter
+    cv::Mat filter = (cv::Mat_<double>(3,3) << 
+    					(1.0/16.0), (2.0/16.0), (1.0/16.0),
+    					(2.0/16.0), (4.0/16.0), (2.0/16.0),
+    					(1.0/16.0), (2.0/16.0), (1.0/16.0));
+    					
+    // Apply filter
     cv::Mat output;
-    cv::medianBlur(src, output, 11);
+    cv::filter2D(src, output, -1, filter);
     
     // Save and show
     //cv::imshow("Result from median filtering", output);
