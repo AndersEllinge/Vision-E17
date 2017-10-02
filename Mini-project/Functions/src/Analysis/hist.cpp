@@ -14,7 +14,7 @@ void drawLine( cv::Mat img, cv::Point start, cv::Point end )
     int thickness = 1;
     int lineType = 8;
     cv::line( img, start, end,
-          cv::Scalar( 256, 256, 256),
+          cv::Scalar( 255, 255, 255),
           thickness,
           lineType );
 }
@@ -44,22 +44,24 @@ int main(int argc, char* argv[])
 
 	// Initialize parameters
 	int histSize = 256;    // bin size
-	float range[] = { 0, 255 };
+	float range[] = { 0, 256 };
 	const float *ranges[] = { range };
 
 	// Calculate histogram
 	cv::Mat hist;
+  cv::Mat histNorm;
 	cv::calcHist( &img, 1, 0, cv::Mat(), hist, 1, &histSize, ranges, true, false );
 
 	// Plot the histogram
-	int hist_w = histSize * 2; int hist_h = 256;
+	int hist_w = 512; int hist_h = 256;
 	int bin_w = cvRound( (double) hist_w/histSize );
-	cv::normalize(hist, hist, 0, 256, cv::NORM_MINMAX, -1);
 
-	cv::Mat histImg = cv::Mat::zeros( hist_h, hist_w, 0 );
+  cv::Mat histImg = cv::Mat::zeros( hist_h, hist_w, 0 );
+  cv::normalize(hist, histNorm, 0, histImg.rows, cv::NORM_MINMAX, -1);
 
-	for (size_t i = 0; i < hist.rows; i++){
-		drawLine(histImg, cv::Point(i*2, hist_h), cv::Point(i*2, hist_h - hist.at<float>(0,i)));
+	for (size_t i = 0; i < histSize; i++){
+    drawLine(histImg, cv::Point((i)*bin_w, hist_h),
+                      cv::Point((i)*bin_w, hist_h - histNorm.at<float>(0,i)));
 	}
 
 	//cv::imshow("Histogram", histImg);
@@ -68,20 +70,21 @@ int main(int argc, char* argv[])
 	// create CDF
 	float sum = 0;
 	cv::Mat histCDF = hist.clone();
-	for (size_t i = 0; i < hist.rows; i++) {
-		sum += 255 * hist.at<float>(0,i);
+	for (size_t i = 0; i < histSize; i++) {
+		sum += 255*(hist.at<float>(i)/(img.rows*img.cols));
 		histCDF.at<float>(0,i) = sum;
 	}
 
 	// normalize it
-	cv::normalize(histCDF, histCDF, 0, 256, cv::NORM_MINMAX, -1);
+	//cv::normalize(histCDF, histCDF, 0, 256, cv::NORM_MINMAX, -1);
 
 	//plot CDF
 	cv::Mat CDF = cv::Mat::zeros( hist_h, hist_w, 0 );
 
-	for (size_t i = 0; i < hist.rows; i++) {
-		drawLine(CDF, cv::Point(i*2, hist_h), cv::Point(i*2, hist_h - histCDF.at<float>(0,i)));
-	}
+  for (size_t i = 0; i < hist.rows; i++){
+    drawLine(CDF, cv::Point((i)*bin_w, hist_h),
+      cv::Point((i)*bin_w, hist_h - histCDF.at<float>(i)));
+  }
 	//cv::imshow("cdf", CDF);
 	cv::imwrite("cdf.bmp", CDF);
 
@@ -105,9 +108,10 @@ int main(int argc, char* argv[])
 	cv::normalize(histCDFImg, histCDFImg, 0, 256, cv::NORM_MINMAX, -1);
 	cv::Mat histImg1 = cv::Mat::zeros( hist_h, hist_w, 0 );
 
-	for (size_t i = 0; i < histCDFImg.rows; i++) {
-		drawLine(histImg1, cv::Point(i*2, hist_h), cv::Point(i*2, hist_h - histCDFImg.at<float>(0,i)));
-	}
+  for (size_t i = 0; i < histSize; i++){
+    drawLine(histImg1, cv::Point((i)*bin_w, hist_h),
+     cv::Point((i)*bin_w, hist_h - histCDFImg.at<float>(i)));
+  }
 	//std::cout << hist << std::endl;
 
 	//cv::imshow("Histogram of the equalized image", histImg1);
