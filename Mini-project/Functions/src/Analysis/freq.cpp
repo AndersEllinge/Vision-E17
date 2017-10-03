@@ -20,8 +20,8 @@ int main(int argc, char* argv[])
 
     // Expand the image to an optimal size.
     cv::Mat padded;
-    int opt_rows = cv::getOptimalDFTSize(img.rows);
-    int opt_cols = cv::getOptimalDFTSize(img.cols);
+    int opt_rows = cv::getOptimalDFTSize(img.rows * 2);
+    int opt_cols = cv::getOptimalDFTSize(img.cols * 2);
     cv::copyMakeBorder(img, padded, 0, opt_rows - img.rows , 0, opt_cols - img.cols, cv::BORDER_CONSTANT, cv::Scalar::all(0));
 
 
