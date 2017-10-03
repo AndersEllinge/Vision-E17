@@ -2,7 +2,7 @@ mkdir analysis
 cd analysis
 mkdir histogram
 cd histogram
-../../../../Functions/Analysis/hist ../../Image3.png
+../../../../Functions/Analysis/hist ../../Image3.png -x=0 -y=0 -width=80 -height=160
 cd ..
 mkdir frequency
 cd frequency
