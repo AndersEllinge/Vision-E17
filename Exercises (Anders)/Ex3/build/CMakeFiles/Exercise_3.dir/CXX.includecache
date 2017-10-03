@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/student/Desktop/workspace/RoVi-2017/Vison/Ex3/src/Exercise_3.cpp
+/home/student/Desktop/workspace/Vision-E17/Exercises (Anders)/Ex3/src/Exercise_3.cpp
 opencv2/core.hpp
 -
 opencv2/highgui.hpp
