@@ -1,4 +1,4 @@
 mkdir processed
 cd processed
 
-../../../Functions/Processing/median ../Image2.png
+../../../Functions/Processing/median ../Image1.png

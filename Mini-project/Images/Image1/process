@@ -4,3 +4,4 @@ cd processed
 ../../../Functions/Processing/max ../Image1.png
 ../../../Functions/Processing/median processed.bmp
 
+
