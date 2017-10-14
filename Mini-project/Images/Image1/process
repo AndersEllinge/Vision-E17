@@ -2,6 +2,8 @@ mkdir processed
 cd processed
 
 ../../../Functions/Processing/max ../Image1.png
-../../../Functions/Processing/median processed.bmp
+../../../Functions/Processing/adaptiveMedian processed.bmp -S_Min=3 -S_Max=21
+
+
 
 
