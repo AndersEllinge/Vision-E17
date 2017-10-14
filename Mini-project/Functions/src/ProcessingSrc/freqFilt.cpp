@@ -3,6 +3,7 @@
 
 void dftshift(cv::Mat& mag);
 cv::Mat butterHP(cv::Size mag, int order, int d0);
+cv::Mat butterLP(cv::Size mag, int order, int d0);
 
 int main(int argc, char* argv[]) {
 
@@ -10,20 +11,22 @@ int main(int argc, char* argv[]) {
         "{@image | ./lena.bmp | image path}"
         "{integer |  | }"
         "{float |  | }"
-        "{buttHP |  | }"
-        "{order |  | }"
-        "{d0 |  | }"
-        
+        "{buttBS |  | }"
+        "{order_1 |  | }"
+        "{d0_1 |  | }"
+        "{order_2 |  | }"
+        "{d0_2 |  | }"
+
     );
-    
+
     if (parser.has("float")) {
     	std::cout << "float was set to " << parser.get<float>("float") << std::endl;
     }
-    
+
     if (parser.has("integer")) {
     	std::cout << "integer was set to " << parser.get<int>("integer") << std::endl;
     }
-    
+
     // Load image as grayscale
     std::string filename = parser.get<std::string>("@image");
     cv::Mat img = cv::imread(filename, cv::IMREAD_GRAYSCALE);
@@ -47,37 +50,73 @@ int main(int argc, char* argv[]) {
     // Compute DFT and shift
     cv::dft(complex, complex);
     dftshift(complex);
-    
-    // If butterworth HP filter 
-    if (parser.has("buttHP") && parser.has("order") && parser.has("d0")) {
-    
-    	// Generate butterworth highpass filter
-    	cv::Mat filter = butterHP(complex.size(), parser.get<int>("order"), parser.get<int>("d0"));
-    	
+
+    // If butterworth HP filter
+    if (parser.has("buttBS") && parser.has("order_1") && parser.has("d0_1") && parser.has("order_2") && parser.has("d0_2")) {
+
+    	// Generate butterworth filter
+    	cv::Mat filterHP = butterHP(complex.size(), parser.get<int>("order_1"), parser.get<int>("d0_1"));
+      cv::Mat filterLP = butterLP(complex.size(), parser.get<int>("order_2"), parser.get<int>("d0_2"));
+
+      /*cv::Mat magn, angl, magOut;
+      cv::Mat planesButtHP[2];
+      cv::split(filterHP, planesButtHP);
+      cv::cartToPolar(planesButtHP[0], planesButtHP[1], magn, angl);
+      magn += cv::Scalar::all(1);
+      cv::log(magn, magn);
+      cv::normalize(magn, magn, 0, 1, cv::NORM_MINMAX);
+
+      magn.convertTo(magOut, CV_8U, 255);
+      cv::imwrite("MagnitudeHP.bmp", magOut);
+
+      cv::Mat planesButtLP[2];
+      cv::split(filterLP, planesButtLP);
+      cv::cartToPolar(planesButtLP[0], planesButtLP[1], magn, angl);
+      cv::log(magn, magn);
+      cv::normalize(magn, magn, 0, 1, cv::NORM_MINMAX);
+      magn.convertTo(magOut, CV_8U, 255);
+      cv::imwrite("MagnitudeLP.bmp", magOut);*/
+
+
+      cv::Mat bandStop = filterLP + filterHP;
+
+      /*cv::Mat planesButtBP[2];
+      cv::split(bandPass, planesButtBP);
+      cv::cartToPolar(planesButtBP[0], planesButtBP[1], magn, angl);
+      cv::log(magn, magn);
+      cv::normalize(magn, magn, 0, 1, cv::NORM_MINMAX);
+      magn.convertTo(magOut, CV_8U, 255);
+      cv::imwrite("MagnitudeBP.bmp", magOut);*/
+
+
     	// Apply filter to dft
-    	cv::mulSpectrums(filter, complex, complex, 0);
-    	
+    	cv::mulSpectrums(bandStop, complex, complex, 0);
+
     	// Shift back quadrants
     	dftshift(complex);
-    	
+
     	// Restore image with reverse DFT
     	cv::Mat filtered;
     	dft(complex,filtered, cv::DFT_INVERSE|cv::DFT_REAL_OUTPUT);
-    	
+
     	// Normalize and convert to grayscale
     	cv::normalize(filtered, filtered, 0, 1, cv::NORM_MINMAX);
     	cv::Mat filteredOut;
     	filtered.convertTo(filteredOut, CV_8U, 255);
-    	
+
+      //crop padding
+      cv::Rect rec(0,0,img.cols,img.rows);
+      cv::Mat cropImg = filteredOut(rec);
+
     	// Save image
-    	cv::imwrite("processed.bmp", filteredOut);
+    	cv::imwrite("processed.bmp", cropImg);
     	return 0;
-    	
+
     }
-    
-    
+
+
     std::cout << "No filter compatible with imputs" << std::endl;
-    
+
     return 0;
 }
 
@@ -109,8 +148,21 @@ cv::Mat butterHP(cv::Size size, int order, int d0) {
         	complex(i,j)[1] = 0;
     	}
 	}
-        
+
     return complex;
 }
 
+cv::Mat butterLP(cv::Size size, int order, int d0) {
+  cv::Mat_<cv::Vec2f> complex(size);
+  for (int i = 0; i < complex.rows; i++) {
+    for (int j = 0; j < complex.cols; j++){
+        float distance = sqrt(pow(i-(complex.rows/2),2) + pow(j-(complex.cols/2),2));
+        complex(i,j)[0] = 1/(1+pow(distance/d0,2*order));
+        complex(i,j)[1] = 0;
+    }
+}
 
+  return complex;
+
+
+}
