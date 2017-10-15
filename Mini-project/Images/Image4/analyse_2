@@ -1,9 +1,0 @@
-mkdir analysis_2
-cd analysis_2
-mkdir histogram
-cd histogram
-../../../../Functions/Analysis/hist ../../Image4_2.png -x=0 -y=0 -width=80 -height=160
-cd ..
-mkdir frequency_2
-cd frequency_2
-../../../../Functions/Analysis/freq ../../Image4_2.png
