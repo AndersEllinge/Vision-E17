@@ -2,12 +2,12 @@ mkdir postAnalysis
 cd postAnalysis
 mkdir histogram
 cd histogram
-../../../../Functions/Analysis/hist ../../processed/processed.bmp
+../../../../Functions/Analysis/hist ../../processed/processedAdapMedian.bmp
 cd ..
 mkdir cropHistogram
 cd cropHistogram
-../../../../Functions/Analysis/hist ../../processed/processed.bmp -x=0 -y=0 -width=80 -height=160
+../../../../Functions/Analysis/hist ../../processed/processedAdapMedian.bmp -x=0 -y=0 -width=80 -height=160
 cd ..
 mkdir frequency
 cd frequency
-../../../../Functions/Analysis/freq ../../processed/processed.bmp
+../../../../Functions/Analysis/freq ../../processed/processedAdapMedian.bmp

@@ -2,4 +2,5 @@ mkdir processed
 cd processed
 
 ../../../Functions/Processing/median ../Image2.png
-../../../Functions/Processing/adaptiveMedian ../Image2.png -S_Min=3 -S_Max=11
+../../../Functions/Processing/adaptiveMedian ../Image2.png -S_Min=3 -S_Max=51
+../../../Functions/Processing/bilateral processedAdapMedian.bmp
