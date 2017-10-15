@@ -1,0 +1,4 @@
+mkdir processed
+cd processed
+
+../../../Functions/Processing/midpoint -size=5 ../Image3.png
