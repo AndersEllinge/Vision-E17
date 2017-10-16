@@ -4,6 +4,7 @@
 void dftshift(cv::Mat& mag);
 cv::Mat butterHP(cv::Size mag, int order, int d0);
 cv::Mat butterLP(cv::Size mag, int order, int d0);
+cv::Mat butterBS(cv::Size mag, int order, int d0, float width);
 
 int main(int argc, char* argv[]) {
 
@@ -16,7 +17,9 @@ int main(int argc, char* argv[]) {
         "{d0_1 |  | }"
         "{order_2 |  | }"
         "{d0_2 |  | }"
-
+        "{d0 |  | }"
+        "{d |  | }"
+        "{width |  | }"
     );
 
     if (parser.has("float")) {
@@ -52,45 +55,82 @@ int main(int argc, char* argv[]) {
     dftshift(complex);
 
     // If butterworth HP filter
-    if (parser.has("buttBS") && parser.has("order_1") && parser.has("d0_1") && parser.has("order_2") && parser.has("d0_2")) {
+    if (parser.has("buttHP") && parser.has("order_1") && parser.has("d0")) {
 
     	// Generate butterworth filter
-    	cv::Mat filterHP = butterHP(complex.size(), parser.get<int>("order_1"), parser.get<int>("d0_1"));
-      cv::Mat filterLP = butterLP(complex.size(), parser.get<int>("order_2"), parser.get<int>("d0_2"));
-
-      /*cv::Mat magn, angl, magOut;
+    	cv::Mat filterHP = butterHP(complex.size(), parser.get<int>("order_1"), parser.get<int>("d0"));
+      cv::Mat magn, angl, magOut;
       cv::Mat planesButtHP[2];
+      /*
       cv::split(filterHP, planesButtHP);
       cv::cartToPolar(planesButtHP[0], planesButtHP[1], magn, angl);
       magn += cv::Scalar::all(1);
       cv::log(magn, magn);
       cv::normalize(magn, magn, 0, 1, cv::NORM_MINMAX);
-
       magn.convertTo(magOut, CV_8U, 255);
-      cv::imwrite("MagnitudeHP.bmp", magOut);
-
-      cv::Mat planesButtLP[2];
-      cv::split(filterLP, planesButtLP);
-      cv::cartToPolar(planesButtLP[0], planesButtLP[1], magn, angl);
-      cv::log(magn, magn);
-      cv::normalize(magn, magn, 0, 1, cv::NORM_MINMAX);
-      magn.convertTo(magOut, CV_8U, 255);
-      cv::imwrite("MagnitudeLP.bmp", magOut);*/
-
-
-      cv::Mat bandStop = filterLP + filterHP;
-
-      /*cv::Mat planesButtBP[2];
-      cv::split(bandPass, planesButtBP);
-      cv::cartToPolar(planesButtBP[0], planesButtBP[1], magn, angl);
-      cv::log(magn, magn);
-      cv::normalize(magn, magn, 0, 1, cv::NORM_MINMAX);
-      magn.convertTo(magOut, CV_8U, 255);
-      cv::imwrite("MagnitudeBP.bmp", magOut);*/
+      cv::imwrite("MagnitudeHP.bmp", magOut);*/
 
 
     	// Apply filter to dft
-    	cv::mulSpectrums(bandStop, complex, complex, 0);
+    	cv::mulSpectrums(filterHP, complex, complex, 0);
+
+
+      cv::split(complex, planesButtHP);
+      cv::cartToPolar(planesButtHP[0], planesButtHP[1], magn, angl);
+      magn += cv::Scalar::all(1);
+      cv::log(magn, magn);
+      cv::normalize(magn, magn, 0, 1, cv::NORM_MINMAX);
+      magn.convertTo(magOut, CV_8U, 255);
+      cv::imwrite("MagnitudeFreqWithHP.bmp", magOut);
+
+    	// Shift back quadrants
+    	dftshift(complex);
+
+    	// Restore image with reverse DFT
+    	cv::Mat filtered;
+    	dft(complex,filtered, cv::DFT_INVERSE|cv::DFT_REAL_OUTPUT);
+
+    	// Normalize and convert to grayscale
+    	cv::normalize(filtered, filtered, 0, 1, cv::NORM_MINMAX);
+    	cv::Mat filteredOut;
+    	filtered.convertTo(filteredOut, CV_8U, 255);
+
+      //crop padding
+      cv::Rect rec(0,0,img.cols,img.rows);
+      cv::Mat cropImg = filteredOut(rec);
+
+    	// Save image
+    	cv::imwrite("processed.bmp", cropImg);
+    	return 0;
+
+    }
+
+    if (parser.has("buttBS") && parser.has("order_1")  && parser.has("d0") && parser.has("width")) {
+
+    	// Generate butterworth filter
+    	cv::Mat filterBS = butterBS(complex.size(), parser.get<int>("order_1"), parser.get<int>("d0"),parser.get<int>("width"));
+
+      cv::Mat magn, angl, magOut;
+      cv::Mat planesButtBS[2];
+      cv::split(filterBS, planesButtBS);
+      cv::cartToPolar(planesButtBS[0], planesButtBS[1], magn, angl);
+      magn += cv::Scalar::all(1);
+      cv::log(magn, magn);
+      cv::normalize(magn, magn, 0, 1, cv::NORM_MINMAX);
+
+      magn.convertTo(magOut, CV_8U, 255);
+      cv::imwrite("MagnitudeBS.bmp", magOut);
+
+    	// Apply filter to dft
+    	cv::mulSpectrums(filterBS, complex, complex, 0);
+
+      cv::split(complex, planesButtBS);
+      cv::cartToPolar(planesButtBS[0], planesButtBS[1], magn, angl);
+      magn += cv::Scalar::all(1);
+      cv::log(magn, magn);
+      cv::normalize(magn, magn, 0, 1, cv::NORM_MINMAX);
+      magn.convertTo(magOut, CV_8U, 255);
+      cv::imwrite("MagnitudeFreqWithBS.bmp", magOut);
 
     	// Shift back quadrants
     	dftshift(complex);
@@ -148,7 +188,6 @@ cv::Mat butterHP(cv::Size size, int order, int d0) {
         	complex(i,j)[1] = 0;
     	}
 	}
-
     return complex;
 }
 
@@ -161,8 +200,17 @@ cv::Mat butterLP(cv::Size size, int order, int d0) {
         complex(i,j)[1] = 0;
     }
 }
-
   return complex;
+}
 
-
+cv::Mat butterBS(cv::Size size, int order, int d0, float width) {
+  cv::Mat_<cv::Vec2f> complex(size);
+  for (int i = 0; i < complex.rows; i++) {
+    for (int j = 0; j < complex.cols; j++){
+        float distance = sqrt(pow(i-(complex.rows/2),2) + pow(j-(complex.cols/2),2));
+        complex(i,j)[0] = 1/(1+pow((distance*width)/pow(distance - d0,2),2*order));
+        complex(i,j)[1] = 0;
+    }
+}
+  return complex;
 }
