@@ -1,4 +1,4 @@
 mkdir processed
 cd processed
 
-../../../Functions/Processing/freqFilt ../Image4_2.png -buttBS=1 -order_1=3 -d0_1=200 -order_2=3 -d0_2=50
+../../../Functions/Processing/freqFilt ../Image4_2.png -buttBS=1 -order_1=3 -width=2 -d0=820 
