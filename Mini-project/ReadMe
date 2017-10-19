@@ -1,0 +1,19 @@
+This readme file explains the content of the attached files.
+
+
+Functions contains the source files and a builder script. In the src folder the source files for both analysis and processing are found. 
+Running the builder script from the Functions folder will build the source files using cmake. The built executables are then to be used freely at will as a library. 
+
+
+Images
+The Images folder contains the images used in the project. Every image has it own folder with an appropriate name and scrips to run the initial analysis of the image (analyse) the image restoration (process) and the post analysis(postAnalyse). Running these scripts will produce the same observations and results as discussed in the report. 
+
+
+Example of how to compile the observations and results of Image1.
+	open terminal and navigate to Mini-project/Functions
+	./builder
+	cd ../Images/Image1
+	./analyse
+	./process
+	./postAnalyse
+The folders analysis, processed and postAnalysis in Image1 should now have been created, and within are their respective image observation and results.
