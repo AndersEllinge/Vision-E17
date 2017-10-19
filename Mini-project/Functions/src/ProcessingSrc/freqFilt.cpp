@@ -12,6 +12,7 @@ int main(int argc, char* argv[]) {
         "{@image | ./lena.bmp | image path}"
         "{integer |  | }"
         "{float |  | }"
+	"{buttHP |  | }"
         "{buttBS |  | }"
         "{order_1 |  | }"
         "{d0_1 |  | }"
@@ -110,7 +111,7 @@ int main(int argc, char* argv[]) {
     	// Generate butterworth filter
     	cv::Mat filterBS = butterBS(complex.size(), parser.get<int>("order_1"), parser.get<int>("d0"),parser.get<int>("width"));
 
-      cv::Mat magn, angl, magOut;
+      /*cv::Mat magn, angl, magOut;
       cv::Mat planesButtBS[2];
       cv::split(filterBS, planesButtBS);
       cv::cartToPolar(planesButtBS[0], planesButtBS[1], magn, angl);
@@ -119,18 +120,18 @@ int main(int argc, char* argv[]) {
       cv::normalize(magn, magn, 0, 1, cv::NORM_MINMAX);
 
       magn.convertTo(magOut, CV_8U, 255);
-      cv::imwrite("MagnitudeBS.bmp", magOut);
+      cv::imwrite("MagnitudeBS.bmp", magOut);*/
 
     	// Apply filter to dft
     	cv::mulSpectrums(filterBS, complex, complex, 0);
 
-      cv::split(complex, planesButtBS);
+      /*cv::split(complex, planesButtBS);
       cv::cartToPolar(planesButtBS[0], planesButtBS[1], magn, angl);
       magn += cv::Scalar::all(1);
       cv::log(magn, magn);
       cv::normalize(magn, magn, 0, 1, cv::NORM_MINMAX);
       magn.convertTo(magOut, CV_8U, 255);
-      cv::imwrite("MagnitudeFreqWithBS.bmp", magOut);
+      cv::imwrite("MagnitudeFreqWithBS.bmp", magOut);*/
 
     	// Shift back quadrants
     	dftshift(complex);
