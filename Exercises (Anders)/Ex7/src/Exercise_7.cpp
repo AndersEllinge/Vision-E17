@@ -18,7 +18,7 @@ void on_trackbar(int, void* userdata)
     (*static_cast<std::function<void()>*>(userdata))();
 }
 
-/*void sobelEdgeDectiong(cv::Mat image){
+void sobelEdgeDectiong(cv::Mat image){
 
     // First we declare the variables we are going to use
     cv::Mat src, src_gray;
@@ -50,10 +50,15 @@ void on_trackbar(int, void* userdata)
     cv::createTrackbar("ksize:", window_name, &ksize, 30, on_trackbar, &f_sobel);
     cv::createTrackbar("scale:", window_name, &scale, 20, on_trackbar, &f_sobel);
     f_sobel(); // Initial call
-}*/
+
+     while (cv::waitKey() != 27)
+        ; // OpenCV processes slider events here
 
 
-/*void cannyEdgeDetection(cv::Mat image){
+}
+
+
+void cannyEdgeDetection(cv::Mat image){
 
     cv::Mat dst, detected_edges;
     //int edgeThresh = 1;
@@ -75,7 +80,11 @@ void on_trackbar(int, void* userdata)
     cv::namedWindow( window_name, cv::WINDOW_AUTOSIZE );
     cv::createTrackbar( "Min Threshold:", window_name, &lowThreshold, max_lowThreshold, on_trackbar, &f_canny );
     f_canny(); // Initial call
-}*/
+
+     while (cv::waitKey() != 27)
+        ; // OpenCV processes slider events here
+
+}
 
 
 int main(int argc, char* argv[])
@@ -100,7 +109,7 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    //----------------- Canny part ------------------//
+    /*//----------------- Canny part ------------------//
     cv::Mat dst, detected_edges;
     //int edgeThresh = 1;
     int lowThreshold = 1;
@@ -159,9 +168,10 @@ int main(int argc, char* argv[])
     cv::createTrackbar("ksize:", window_sobel_name, &ksize, 30, on_trackbar, &f_sobel);
     cv::createTrackbar("scale:", window_sobel_name, &scale, 20, on_trackbar, &f_sobel);
     cv::createTrackbar("delta:", window_sobel_name, &delta, 20, on_trackbar, &f_sobel);
-    f_sobel(); // Initial call
+    f_sobel(); // Initial call*/
 
-
+    cannyEdgeDetection(image);
+    sobelEdgeDectiong(image);
 
 
 
