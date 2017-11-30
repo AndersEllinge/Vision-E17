@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 2.8.11)
+project(Exercise_11)
+set(CMAKE_CXX_STANDARD 11)
+find_package(OpenCV 3 REQUIRED)
+add_executable(Exercise_11 src/Exercise_11.cpp)
+target_link_libraries(Exercise_11 ${OpenCV_LIBS})
