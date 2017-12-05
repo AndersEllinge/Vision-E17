@@ -25,20 +25,20 @@
       <file leaf-file-name="visionFinal.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/visionFinal.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="452">
-              <caret line="266" column="44" lean-forward="true" selection-start-line="266" selection-start-column="44" selection-end-line="266" selection-end-column="44" />
+            <state relative-caret-position="92">
+              <caret line="241" column="4" lean-forward="true" selection-start-line="241" selection-start-column="4" selection-end-line="241" selection-end-column="4" />
               <folding>
-                <element signature="e#382#1776#0" expanded="false" />
-                <element signature="e#1778#2802#0" expanded="false" />
-                <element signature="e#2804#3227#0" expanded="false" />
-                <element signature="e#3229#3650#0" expanded="false" />
-                <element signature="e#3652#4068#0" expanded="false" />
-                <element signature="e#4070#4316#0" expanded="false" />
-                <element signature="e#4318#4535#0" expanded="false" />
-                <element signature="e#4537#4974#0" expanded="false" />
-                <element signature="e#4976#5225#0" expanded="false" />
-                <element signature="e#5227#5591#0" expanded="false" />
-                <element signature="e#5593#5829#0" expanded="false" />
+                <element signature="e#86#113#0" expanded="true" />
+                <element signature="e#401#1795#0" expanded="false" />
+                <element signature="e#1797#2821#0" expanded="false" />
+                <element signature="e#2823#3246#0" expanded="false" />
+                <element signature="e#3248#3669#0" expanded="false" />
+                <element signature="e#4129#4375#0" expanded="false" />
+                <element signature="e#4377#4594#0" expanded="false" />
+                <element signature="e#4596#5033#0" expanded="false" />
+                <element signature="e#5035#5284#0" expanded="false" />
+                <element signature="e#5286#5650#0" expanded="false" />
+                <element signature="e#5652#5888#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -60,7 +60,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="125" />
     <option name="y" value="186" />
     <option name="width" value="1855" />
@@ -101,6 +101,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../RoVi-2017/plugin" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -121,7 +122,7 @@
     <configuration name="Exercise_10" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="../marker_color_hard_49.png" PASS_PARENT_ENVS_2="true" PROJECT_NAME="visionFinal" TARGET_NAME="Exercise_10" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="visionFinal" RUN_TARGET_NAME="Exercise_10">
       <envs />
     </configuration>
-    <configuration name="visionFinal" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="../marker_color_01.png" PASS_PARENT_ENVS_2="true" PROJECT_NAME="visionFinal" TARGET_NAME="visionFinal" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="visionFinal" RUN_TARGET_NAME="visionFinal">
+    <configuration name="visionFinal" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="../Marker1.ppm" PASS_PARENT_ENVS_2="true" PROJECT_NAME="visionFinal" TARGET_NAME="visionFinal" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="visionFinal" RUN_TARGET_NAME="visionFinal">
       <envs />
     </configuration>
     <list size="3">
@@ -143,21 +144,26 @@
       <workItem from="1510994120789" duration="11272000" />
       <workItem from="1511006005132" duration="8121000" />
       <workItem from="1511014373258" duration="4111000" />
+      <workItem from="1511446084299" duration="21000" />
+      <workItem from="1511950363795" duration="272000" />
+      <workItem from="1511951090983" duration="138000" />
+      <workItem from="1511958992142" duration="1412000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23504000" />
+    <option name="totallyTimeSpent" value="25347000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="125" y="186" width="1855" height="951" extended-state="0" />
+    <frame x="125" y="186" width="1855" height="979" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11644205" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914287" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914287" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24685714" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914287" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -184,7 +190,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/visionFinal.cpp</url>
-          <line>142</line>
+          <line>144</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
@@ -193,24 +199,104 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/visionFinal.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#86#113#0" expanded="true" />
+            <element signature="e#401#1795#0" expanded="false" />
+            <element signature="e#1797#2821#0" expanded="false" />
+            <element signature="e#2823#3246#0" expanded="false" />
+            <element signature="e#3248#3669#0" expanded="false" />
+            <element signature="e#4129#4375#0" expanded="false" />
+            <element signature="e#4377#4594#0" expanded="false" />
+            <element signature="e#4596#5033#0" expanded="false" />
+            <element signature="e#5035#5284#0" expanded="false" />
+            <element signature="e#5286#5650#0" expanded="false" />
+            <element signature="e#5652#5888#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/visionFinal.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#86#113#0" expanded="true" />
+            <element signature="e#401#1795#0" expanded="false" />
+            <element signature="e#1797#2821#0" expanded="false" />
+            <element signature="e#2823#3246#0" expanded="false" />
+            <element signature="e#3248#3669#0" expanded="false" />
+            <element signature="e#4129#4375#0" expanded="false" />
+            <element signature="e#4377#4594#0" expanded="false" />
+            <element signature="e#4596#5033#0" expanded="false" />
+            <element signature="e#5035#5284#0" expanded="false" />
+            <element signature="e#5286#5650#0" expanded="false" />
+            <element signature="e#5652#5888#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/visionFinal.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#86#113#0" expanded="true" />
+            <element signature="e#401#1795#0" expanded="false" />
+            <element signature="e#1797#2821#0" expanded="false" />
+            <element signature="e#2823#3246#0" expanded="false" />
+            <element signature="e#3248#3669#0" expanded="false" />
+            <element signature="e#4129#4375#0" expanded="false" />
+            <element signature="e#4377#4594#0" expanded="false" />
+            <element signature="e#4596#5033#0" expanded="false" />
+            <element signature="e#5035#5284#0" expanded="false" />
+            <element signature="e#5286#5650#0" expanded="false" />
+            <element signature="e#5652#5888#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/visionFinal.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#86#113#0" expanded="true" />
+            <element signature="e#401#1795#0" expanded="false" />
+            <element signature="e#1797#2821#0" expanded="false" />
+            <element signature="e#2823#3246#0" expanded="false" />
+            <element signature="e#3248#3669#0" expanded="false" />
+            <element signature="e#4129#4375#0" expanded="false" />
+            <element signature="e#4377#4594#0" expanded="false" />
+            <element signature="e#4596#5033#0" expanded="false" />
+            <element signature="e#5035#5284#0" expanded="false" />
+            <element signature="e#5286#5650#0" expanded="false" />
+            <element signature="e#5652#5888#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Exercise_10.cpp" />
     <entry file="file://$PROJECT_DIR$/src/Exercise_10.cpp" />
     <entry file="file://$PROJECT_DIR$/src/visionFinal.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="452">
-          <caret line="266" column="44" lean-forward="true" selection-start-line="266" selection-start-column="44" selection-end-line="266" selection-end-column="44" />
+        <state relative-caret-position="92">
+          <caret line="241" column="4" lean-forward="true" selection-start-line="241" selection-start-column="4" selection-end-line="241" selection-end-column="4" />
           <folding>
-            <element signature="e#382#1776#0" expanded="false" />
-            <element signature="e#1778#2802#0" expanded="false" />
-            <element signature="e#2804#3227#0" expanded="false" />
-            <element signature="e#3229#3650#0" expanded="false" />
-            <element signature="e#3652#4068#0" expanded="false" />
-            <element signature="e#4070#4316#0" expanded="false" />
-            <element signature="e#4318#4535#0" expanded="false" />
-            <element signature="e#4537#4974#0" expanded="false" />
-            <element signature="e#4976#5225#0" expanded="false" />
-            <element signature="e#5227#5591#0" expanded="false" />
-            <element signature="e#5593#5829#0" expanded="false" />
+            <element signature="e#86#113#0" expanded="true" />
+            <element signature="e#401#1795#0" expanded="false" />
+            <element signature="e#1797#2821#0" expanded="false" />
+            <element signature="e#2823#3246#0" expanded="false" />
+            <element signature="e#3248#3669#0" expanded="false" />
+            <element signature="e#4129#4375#0" expanded="false" />
+            <element signature="e#4377#4594#0" expanded="false" />
+            <element signature="e#4596#5033#0" expanded="false" />
+            <element signature="e#5035#5284#0" expanded="false" />
+            <element signature="e#5286#5650#0" expanded="false" />
+            <element signature="e#5652#5888#0" expanded="false" />
           </folding>
         </state>
       </provider>

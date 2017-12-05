@@ -10,6 +10,7 @@
 #include <opencv2/imgproc.hpp>
 #include <functional>
 #include <iostream>
+#include <fstream>
 
 
 // Calls the std::function<void()> object passed as 'userdata'
@@ -126,11 +127,12 @@ cv::Mat closing(cv::Mat image, int elementType, int kernelSize){
 
 cv::Mat segmentateHSV(cv::Mat image){
 
-    int hueMin = 105, saturationMin = 111, valueMin = 49;
-    int hueMax = 125, saturationMax = 167, valueMax = 170;
+    int hueMin = 0, saturationMin = 0, valueMin = 0;
+    int hueMax = 255, saturationMax = 255, valueMax = 255;
 
     //convert to HSV
     cv::Mat HSV(image.rows, image.cols, CV_8UC3);
+    cv::cvtColor(image, image, CV_BGRA2BGR);
     cv::cvtColor(image, HSV, CV_BGR2HSV);
 
     cv::Mat dst;
@@ -262,6 +264,8 @@ int main(int argc, char* argv[])
 
 
     cv::imshow("Contours", segmented);
+
+
 
     while (cv::waitKey() != 27);
     ; // OpenCV processes slider events here
