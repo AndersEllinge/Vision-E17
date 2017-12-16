@@ -1,0 +1,25 @@
+#!/bin/bash
+for i in {1..9}
+do
+    path=/home/student/Desktop/workspace/marker_color/
+    marker=marker_color_0
+    marker+=$i
+    marker+=.png
+    path+=$marker
+    pathout+=$marker
+    echo $path
+    ./cmake-build-debug/visionFinal $path -time=1
+done
+
+for i in {10..30}
+do
+    path=/home/student/Desktop/workspace/marker_color/
+    marker=marker_color_
+    marker+=$i
+    marker+=.png
+    path+=$marker
+    pathout+=$marker
+    echo $path
+    ./cmake-build-debug/visionFinal $path -time=1
+done
+

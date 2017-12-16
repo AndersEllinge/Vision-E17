@@ -19,6 +19,12 @@ iostream
 -
 fstream
 -
+algorithm
+-
+chrono
+-
+ctime
+-
 
 /usr/local/include/opencv/cxcore.h
 opencv2/core/core_c.h

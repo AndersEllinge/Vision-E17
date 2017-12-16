@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/student/Desktop/workspace/Vision-E17/Exercises (Anders)/Ex11/src/Exercise_11.cpp
+/home/student/workspace/Vision-E17/Exercises (Anders)/Ex11/src/Exercise_11.cpp
 opencv2/core.hpp
 -
 opencv2/highgui.hpp
@@ -18,9 +18,9 @@ functional
 iostream
 -
 opencv2/features2d.hpp
-/home/student/Desktop/workspace/Vision-E17/Exercises (Anders)/Ex11/src/opencv2/features2d.hpp
+/home/student/workspace/Vision-E17/Exercises (Anders)/Ex11/src/opencv2/features2d.hpp
 opencv2/xfeatures2d.hpp
-/home/student/Desktop/workspace/Vision-E17/Exercises (Anders)/Ex11/src/opencv2/xfeatures2d.hpp
+/home/student/workspace/Vision-E17/Exercises (Anders)/Ex11/src/opencv2/xfeatures2d.hpp
 
 /opt/ros/kinetic/include/opencv-3.2.0-dev/opencv/cxcore.h
 opencv2/core/core_c.h

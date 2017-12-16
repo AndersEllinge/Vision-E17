@@ -1,0 +1,16 @@
+Should work for both tests.
+
+HSV settings:
+
+int hueMin = 105, saturationMin = 83, valueMin = 42;
+int hueMax = 125, saturationMax = 180, valueMax = 115;
+
+segmented = segmentateHSV(image);
+segmented = opening(segmented, 0, 3);
+segmented = closing(segmented, 0, 3);
+segmented = closing(segmented, 0, 3);
+
+segmented = opening(segmented, 0, 14);
+
+
+

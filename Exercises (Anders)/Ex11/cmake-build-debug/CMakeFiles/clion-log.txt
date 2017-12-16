@@ -1,4 +1,4 @@
-/home/student/clion-2017.2.3/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" "/home/student/Desktop/workspace/Vision-E17/Exercises (Anders)/Ex11"
+/home/student/workspace/clion-2017.2.3/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" "/home/student/workspace/Vision-E17/Exercises (Anders)/Ex11"
 -- The C compiler identification is GNU 5.4.0
 -- The CXX compiler identification is GNU 5.4.0
 -- Check for working C compiler: /usr/bin/cc
@@ -16,4 +16,4 @@
 -- Found OpenCV: /opt/ros/kinetic (found suitable version "3.2.0", minimum required is "3") 
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/student/Desktop/workspace/Vision-E17/Exercises (Anders)/Ex11/cmake-build-debug
+-- Build files have been written to: /home/student/workspace/Vision-E17/Exercises (Anders)/Ex11/cmake-build-debug

@@ -1,0 +1,25 @@
+#!/bin/bash
+for i in {1..9}
+do
+    path=/home/student/Desktop/workspace/marker_corny_hard/
+    marker=marker_corny_hard_0
+    marker+=$i
+    marker+=.png
+    path+=$marker
+    pathout+=$marker
+    echo $path
+    ./cmake-build-debug/marker3 Marker3.ppm $path -output=$marker
+done
+
+for i in {10..52}
+do
+    path=/home/student/Desktop/workspace/marker_corny_hard/
+    marker=marker_corny_hard_
+    marker+=$i
+    marker+=.png
+    path+=$marker
+    pathout+=$marker
+    echo $path
+    ./cmake-build-debug/marker3 Marker3.ppm $path -output=$marker
+done
+
