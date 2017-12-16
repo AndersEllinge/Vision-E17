@@ -8,7 +8,7 @@ do
     path+=$marker
     pathout+=$marker
     echo $path
-    ./cmake-build-debug/marker3 Marker3.ppm $path -output=$marker
+    ./cmake-build-debug/marker3 Marker3.ppm $path -output=$marker -hard=1
 done
 
 for i in {10..52}
@@ -20,6 +20,6 @@ do
     path+=$marker
     pathout+=$marker
     echo $path
-    ./cmake-build-debug/marker3 Marker3.ppm $path -output=$marker
+    ./cmake-build-debug/marker3 Marker3.ppm $path -output=$marker -hard=1
 done
 

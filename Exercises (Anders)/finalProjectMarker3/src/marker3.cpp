@@ -22,6 +22,17 @@ void on_trackbar(int, void* userdata)
     (*static_cast<std::function<void()>*>(userdata))();
 }
 
+std::vector<cv::Point2i> toRobotPoints(std::vector<cv::Point2i> points, cv::Mat image){
+
+    cv::Point2i UV(image.cols/2,image.rows/2);
+    std::vector<cv::Point2i> newPoints = points;
+    //std::cout << "x: " << UV.x << " y: " << UV.y << std::endl;
+    for (int i = 0; i < points.size() ; ++i) {
+        // std::cout << "x: " << (UV-points[i]).x << " y: " << (UV-points[i]).y << std::endl;
+        newPoints[i] = UV-points[i];
+    }
+    return newPoints;
+}
 
 cv::Mat cannyEdgeDetection(cv::Mat image){
 
@@ -125,8 +136,8 @@ int main(int argc, char* argv[])
         "{help   |            | print this message}"
         "{@object|            | object path}"
         "{@scenes |           | scene path}"
-        "{filter |            | toggle to high-pass filter the input image}"
         "{output |            | name for saved picture}"
+        "{hard |            | name for saved picture}"
     );
 
     if (parser.has("help")) {
@@ -191,7 +202,6 @@ int main(int argc, char* argv[])
         if( matches[i].distance < 3*min_dist )
             good_matches.push_back( matches[i]);
     }
-
 /*
     //-- Step 3: Matching descriptor vectors using FLANN matcher
     cv::Ptr<cv::FlannBasedMatcher> matcher = cv::FlannBasedMatcher::create();
@@ -199,7 +209,7 @@ int main(int argc, char* argv[])
     matcher->knnMatch(descriptors_object,descriptors_scene,matches,2);
 
 
-    //-- Draw only "good" matches (i.e. whose distance is less than 3*min_dist )
+    //-- Draw only "good" matches
     std::vector< cv::DMatch > good_matches;
 
     for( int i = 0; i < matches.size(); i++ )
@@ -236,14 +246,7 @@ int main(int argc, char* argv[])
     perspectiveTransform( obj_corners, scene_corners, H);
 
 
-    /*//-- Draw lines between the corners (the mapped object in the scene - image_2 )
-    line( img_matches, scene_corners[0] + cv::Point2f( img_object.cols, 0), scene_corners[1] + cv::Point2f( img_object.cols, 0), cv::Scalar(0, 255, 0), 4 );
-    line( img_matches, scene_corners[1] + cv::Point2f( img_object.cols, 0), scene_corners[2] + cv::Point2f( img_object.cols, 0), cv::Scalar( 0, 255, 0), 4 );
-    line( img_matches, scene_corners[2] + cv::Point2f( img_object.cols, 0), scene_corners[3] + cv::Point2f( img_object.cols, 0), cv::Scalar( 0, 255, 0), 4 );
-    line( img_matches, scene_corners[3] + cv::Point2f( img_object.cols, 0), scene_corners[0] + cv::Point2f( img_object.cols, 0), cv::Scalar( 0, 255, 0), 4 );
-
     //-- Show detected matches
-    imshow( "Good Matches & Object detection", img_matches );*/
 
     std::vector<cv::Point2i> points;
     points.push_back(scene_corners[0] );
@@ -257,22 +260,28 @@ int main(int argc, char* argv[])
 
     std::ofstream outfile;
 
-    outfile.open("marker3HardTime.csv", std::ios_base::app);
-    outfile << elapsed_time << "," << matches.size() << std::endl;
+    if (parser.has("hard")) {
+        outfile.open("marker3HardTime.csv", std::ios_base::app);
+        outfile << elapsed_time << "," << matches.size() << std::endl;
+    }
+    else{
+        outfile.open("marker3Time.csv", std::ios_base::app);
+        outfile << elapsed_time << "," << matches.size() << std::endl;
+    }
 
-
-    /*for(int i = 0; i < points.size(); i++){
-        std::cout << points[i] << std::endl;
-    }*/
+    std::vector<cv::Point2i> allPoints;
+    allPoints = toRobotPoints(allPoints, img_scene);
 
     for (int i = 0; i < points.size(); i++) {
        cv::circle(img_scene,points[i],5,0,2);
     }
 
-    /*imshow( "Good Matches & Object detection", img_scene );
+    if (parser.has("hard"))
+        cv::imwrite("results/marker3_hard/" + outname, img_scene);
+    else
+        cv::imwrite("results/marker3/" + outname, img_scene);
 
-    cv::waitKey(0);
-    return 0;*/
-    cv::imwrite("results/marker3_hard/" + outname, img_scene);
+
+    return 1;
 }
 

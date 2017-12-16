@@ -268,8 +268,6 @@ int main(int argc, char* argv[])
         "{@image   |../lego.jpg | image path}"
         "{output   |            | name for saved picture}"
         "{slider   |            | Open program with slider bars}"
-        "{time     |            | Test point detection versus time}"
-        "{sequence |            | Find points on a sequence and show em on picture}"
         "{hard     |            | save in folder for hard sequence}"
     );
 
@@ -326,174 +324,103 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    if (parser.has("time")) {
-        auto start = std::chrono::system_clock::now();
+
+    auto start = std::chrono::system_clock::now();
+
+    cv::Mat segmentedBlue, segmentedRed;
+
+    //FIND BLUE//105,125,83,180,42,115
+    segmentedBlue = segmentateHSV(image, 110, 120, 83, 180, 35, 153); //blue circles
+    segmentedBlue = opening(segmentedBlue, 0, 3);
+    segmentedBlue = closing(segmentedBlue, 0, 6);
+    segmentedBlue = opening(segmentedBlue, 0, 14);
+
+    std::vector<std::vector<cv::Point> > contoursBlue = findContours(segmentedBlue);
+
+    //segmentedBlue = drawContours(contoursBlue, segmentedBlue);
+
+    //Get the moments
+    std::vector<cv::Moments> muBlue = getMu(contoursBlue);
+
+    //get the mass centers
+    std::vector<cv::Point2i> mcBlue = getCenterPoints(muBlue, contoursBlue);
+
+    //segmentedBlue = drawPoints(mcBlue, segmentedBlue, cv::Vec3b(255,0,0));
+
+    //mcBlue = toRobotPoints(mcBlue, segmentedBlue);
 
 
-        cv::Mat segmentedBlue, segmentedRed;
+    //FIND RED //0,25,170,215,80,190
+    segmentedRed = segmentateHSV(image, 0, 10, 137, 215, 80, 215); //red circles
+    segmentedRed = opening(segmentedRed, 0, 3);
+    segmentedRed = closing(segmentedRed, 0, 6);
+    segmentedRed = opening(segmentedRed, 0, 14);
 
-        //FIND BLUE//105,125,83,180,42,115
-        segmentedBlue = segmentateHSV(image, 110, 120, 83, 180, 35, 153); //blue circles
-        segmentedBlue = opening(segmentedBlue, 0, 3);
-        segmentedBlue = closing(segmentedBlue, 0, 6);
-        segmentedBlue = opening(segmentedBlue, 0, 14);
+    std::vector<std::vector<cv::Point> > contoursRed = findContours(segmentedRed);
 
-        std::vector<std::vector<cv::Point> > contoursBlue = findContours(segmentedBlue);
+    //segmentedRed = drawContours(contoursRed, segmentedRed);
 
-        //segmentedBlue = drawContours(contoursBlue, segmentedBlue);
+    //Get the moments
+    std::vector<cv::Moments> muRed = getMu(contoursRed);
 
-        //Get the moments
-        std::vector<cv::Moments> muBlue = getMu(contoursBlue);
+    //get the mass centers
+    std::vector<cv::Point2i> mcRed = getCenterPoints(muRed, contoursRed);
 
-        //get the mass centers
-        std::vector<cv::Point2i> mcBlue = getCenterPoints(muBlue, contoursBlue);
+    //segmentedRed = drawPoints(mcRed, segmentedRed,cv::Vec3b(0,0,255));
 
-        //segmentedBlue = drawPoints(mcBlue, segmentedBlue, cv::Vec3b(255,0,0));
+    //mcRed = toRobotPoints(mcRed, segmentedRed);
 
-        //mcBlue = toRobotPoints(mcBlue, segmentedBlue);
+    //DO STUFF WITH RED AND BLUE
+    //cv::Mat result = segmentedBlue + segmentedRed;
 
+    std::vector<cv::Point2i> bluePoints = decideOnBlueMarkers(mcBlue, mcRed);
 
-        //FIND RED //0,25,170,215,80,190
-        segmentedRed = segmentateHSV(image, 0, 10, 137, 215, 80, 215); //red circles
-        segmentedRed = opening(segmentedRed, 0, 3);
-        segmentedRed = closing(segmentedRed, 0, 6);
-        segmentedRed = opening(segmentedRed, 0, 14);
-
-        std::vector<std::vector<cv::Point> > contoursRed = findContours(segmentedRed);
-
-        //segmentedRed = drawContours(contoursRed, segmentedRed);
-
-        //Get the moments
-        std::vector<cv::Moments> muRed = getMu(contoursRed);
-
-        //get the mass centers
-        std::vector<cv::Point2i> mcRed = getCenterPoints(muRed, contoursRed);
-
-        //segmentedRed = drawPoints(mcRed, segmentedRed,cv::Vec3b(0,0,255));
-
-        //mcRed = toRobotPoints(mcRed, segmentedRed);
-
-        //DO STUFF WITH RED AND BLUE
-        //cv::Mat result = segmentedBlue + segmentedRed;
-
-        std::vector<cv::Point2i> bluePoints = decideOnBlueMarkers(mcBlue, mcRed);
-
-        if (bluePoints.size() < 3 || mcRed.size() < 1) {
-            std::cout << "Did not find enough markers" << std::endl;
-            return 1;
-        }
-
-        //result.at<cv::Vec3b>(bluePoints[0]) = {0,255,255};
-        //result.at<cv::Vec3b>(bluePoints[1]) = {255,255,255};
-
-        std::vector<cv::Point2i> allPoints;
-        for (int i = 0; i < mcRed.size(); i++) {
-            //cv::circle(result, mcRed[i], 10, cv::Vec3b(255, 0, 0), 4);
-            allPoints.push_back(mcRed[i]);
-        }
-        for (int i = 0; i < bluePoints.size(); i++) {
-            allPoints.push_back(bluePoints[i]);
-            //cv::circle(result, bluePoints[i], 10, cv::Vec3b(0, 0, 255), 4);
-        }
-        allPoints = toRobotPoints(allPoints, image);
-
-
-        auto end = std::chrono::system_clock::now();
-
-        long elapsed_time = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
-
-        std::ofstream outfile;
-
-        if(parser.has("hard")) {
-            outfile.open("marker1TimeHard.csv", std::ios_base::app);
-            outfile << elapsed_time << std::endl;
-        }
-        else {
-            outfile.open("marker1Time.csv", std::ios_base::app);
-            outfile << elapsed_time << std::endl;
-        }
-
-
-        //std::cout << "Red: " << allPoints[0] << "Blue1: " << allPoints[1] << "Blue2: " << allPoints[2]<< std::endl;
-
-        //cv::imwrite("results/marker1/" + outname, result);
+    if (bluePoints.size() < 3 || mcRed.size() < 1) {
+        std::cout << "Did not find enough markers" << std::endl;
+        return 1;
     }
 
-    if (parser.has("sequence")) {
-        cv::Mat segmentedBlue, segmentedRed;
+    //result.at<cv::Vec3b>(bluePoints[0]) = {0,255,255};
+    //result.at<cv::Vec3b>(bluePoints[1]) = {255,255,255};
 
-        //FIND BLUE//105,125,83,180,42,115
-        segmentedBlue = segmentateHSV(image, 110, 120, 83, 180, 35, 153); //blue circles
-        segmentedBlue = opening(segmentedBlue, 0, 3);
-        segmentedBlue = closing(segmentedBlue, 0, 6);
-        segmentedBlue = opening(segmentedBlue, 0, 14);
-
-        std::vector<std::vector<cv::Point> > contoursBlue = findContours(segmentedBlue);
-
-        //segmentedBlue = drawContours(contoursBlue, segmentedBlue);
-
-        //Get the moments
-        std::vector<cv::Moments> muBlue = getMu(contoursBlue);
-
-        //get the mass centers
-        std::vector<cv::Point2i> mcBlue = getCenterPoints(muBlue, contoursBlue);
-
-        //segmentedBlue = drawPoints(mcBlue, segmentedBlue, cv::Vec3b(255,0,0));
-
-        //mcBlue = toRobotPoints(mcBlue, segmentedBlue);
-
-
-        //FIND RED //0,25,170,215,80,190
-        segmentedRed = segmentateHSV(image, 0, 10, 137, 215, 80, 215); //red circles
-        segmentedRed = opening(segmentedRed, 0, 3);
-        segmentedRed = closing(segmentedRed, 0, 6);
-        segmentedRed = opening(segmentedRed, 0, 14);
-
-        std::vector<std::vector<cv::Point> > contoursRed = findContours(segmentedRed);
-
-        //segmentedRed = drawContours(contoursRed, segmentedRed);
-
-        //Get the moments
-        std::vector<cv::Moments> muRed = getMu(contoursRed);
-
-        //get the mass centers
-        std::vector<cv::Point2i> mcRed = getCenterPoints(muRed, contoursRed);
-
-        //segmentedRed = drawPoints(mcRed, segmentedRed,cv::Vec3b(0,0,255));
-
-        //mcRed = toRobotPoints(mcRed, segmentedRed);
-
-        //DO STUFF WITH RED AND BLUE
-        //cv::Mat result = segmentedBlue + segmentedRed;
-
-        std::vector<cv::Point2i> bluePoints = decideOnBlueMarkers(mcBlue, mcRed);
-
-        if (bluePoints.size() < 3 || mcRed.size() < 1) {
-            std::cout << "Did not find enough markers" << std::endl;
-            return 1;
-        }
-
-        //result.at<cv::Vec3b>(bluePoints[0]) = {0,255,255};
-        //result.at<cv::Vec3b>(bluePoints[1]) = {255,255,255};
-
-        //image = drawContours(contoursRed, image);
-        //image = drawContours(contoursBlue, image);
-        std::vector<cv::Point2i> allPoints;
-        for (int i = 0; i < mcRed.size(); i++) {
-            cv::circle(image, mcRed[i], 10, cv::Vec3b(0, 0, 255), 2);
-            allPoints.push_back(mcRed[i]);
-        }
-        for (int i = 0; i < bluePoints.size(); i++) {
-            allPoints.push_back(bluePoints[i]);
-            cv::circle(image, bluePoints[i], 10, cv::Vec3b(255, 0, 0), 2);
-        }
-        allPoints = toRobotPoints(allPoints, image);
-
-        if(parser.has("hard"))
-            cv::imwrite("results/marker1_hard/" + outname, image);
-        else
-            cv::imwrite("results/marker1/" + outname, image);
+    //image = drawContours(contoursRed, image);
+    //image = drawContours(contoursBlue, image);
+    std::vector<cv::Point2i> allPoints;
+    for (int i = 0; i < mcRed.size(); i++) {
+        allPoints.push_back(mcRed[i]);
     }
+    for (int i = 0; i < bluePoints.size(); i++) {
+        allPoints.push_back(bluePoints[i]);
+    }
+    allPoints = toRobotPoints(allPoints, image);
+
+    auto end = std::chrono::system_clock::now();
+
+    long elapsed_time = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+
+    std::ofstream outfile;
+
+    if(parser.has("hard")) {
+        outfile.open("marker1TimeHard.csv", std::ios_base::app);
+        outfile << elapsed_time << std::endl;
+    }
+    else {
+        outfile.open("marker1Time.csv", std::ios_base::app);
+        outfile << elapsed_time << std::endl;
+    }
+
+
+    for (int i = 0; i < mcRed.size(); i++) {
+        cv::circle(image, mcRed[i], 10, cv::Vec3b(0, 0, 255), 2);
+    }
+    for (int i = 0; i < bluePoints.size(); i++) {
+        cv::circle(image, mcBlue[i], 10, cv::Vec3b(255, 0, 0), 2);
+    }
+
+    if(parser.has("hard"))
+        cv::imwrite("results/marker1_hard/" + outname, image);
+    else
+        cv::imwrite("results/marker1/" + outname, image);
 
 
 

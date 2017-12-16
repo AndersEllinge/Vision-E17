@@ -8,7 +8,7 @@ do
     path+=$marker
     pathout+=$marker
     echo $path
-    ./cmake-build-debug/visionFinal $path -output=$marker -sequence=1 -hard=1
+    ./cmake-build-debug/visionFinal $path -output=$marker -hard=1
 done
 
 for i in {10..52}
@@ -20,5 +20,5 @@ do
     path+=$marker
     pathout+=$marker
     echo $path
-    ./cmake-build-debug/visionFinal $path -output=$marker -sequence=1 -hard=1
+    ./cmake-build-debug/visionFinal $path -output=$marker -hard=1
 done
